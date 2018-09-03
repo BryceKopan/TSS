@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float movementSpeed = 10f;
+        private float movementSpeed = 10f;
 
-    private Vector3 movementDirection;
+    private Vector3 moveDirection;
+    private Vector3 facingDirection;
     private Actions actions;
 
     // Use this for initialization
@@ -20,56 +21,65 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         handleInput();
+        setMovementAngle();
+        setFacingAngle();
 
-        transform.position += movementDirection * movementSpeed * Time.deltaTime;
+        //transform.rotation = Quaternion.Euler(lookDirection);
+        Vector3 moveVector;
+        moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
+        transform.position += moveVector;
 
-        if (movementDirection != new Vector3(0, 0, 0))
+        /*if (movementDirection != new Vector3(0, 0, 0))
             actions.Walk();
         else if (movementDirection == new Vector3(0, 0, 0))
             actions.Idle();
+        */
     }
 
     void handleInput()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            movementDirection += Vector3.forward;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            movementDirection -= Vector3.forward;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            movementDirection += Vector3.left;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            movementDirection -= Vector3.left;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            movementDirection += Vector3.back;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            movementDirection -= Vector3.back;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            movementDirection += Vector3.right;
-            transform.LookAt(transform.position + movementDirection);
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            movementDirection -= Vector3.right;
-            transform.LookAt(transform.position + movementDirection);
-        }
+    }
+
+    void setMovementAngle()
+    {
+        //WASD Movement Input
+        if(Input.GetKeyDown(KeyCode.W))
+            moveDirection += Vector3.forward;
+        if(Input.GetKeyUp(KeyCode.W))
+            moveDirection -= Vector3.forward;
+        if(Input.GetKeyDown(KeyCode.A))
+            moveDirection += Vector3.left;
+        if(Input.GetKeyUp(KeyCode.A))
+            moveDirection -= Vector3.left;
+        if(Input.GetKeyDown(KeyCode.S))
+            moveDirection += Vector3.back;
+        if(Input.GetKeyUp(KeyCode.S))
+            moveDirection -= Vector3.back;
+        if(Input.GetKeyDown(KeyCode.D))
+            moveDirection += Vector3.right;
+        if(Input.GetKeyUp(KeyCode.D))
+            moveDirection -= Vector3.right;
+    }
+
+    void setFacingAngle()
+    {
+        //Arrow Keys Facing Input
+        if(Input.GetKeyDown(KeyCode.UpArrow))
+            facingDirection += Vector3.forward;
+        else if(Input.GetKeyUp(KeyCode.UpArrow))
+            facingDirection -= Vector3.forward;
+        else if(Input.GetKeyDown(KeyCode.LeftArrow))
+            facingDirection += Vector3.left;
+        else if(Input.GetKeyUp(KeyCode.LeftArrow))
+            facingDirection -= Vector3.left;
+        else if(Input.GetKeyDown(KeyCode.DownArrow))
+            facingDirection += Vector3.back;
+        else if(Input.GetKeyUp(KeyCode.DownArrow))
+            facingDirection -= Vector3.back;
+        else if(Input.GetKeyDown(KeyCode.RightArrow))
+            facingDirection += Vector3.right;
+        else if(Input.GetKeyUp(KeyCode.RightArrow))
+            facingDirection -= Vector3.right;
+        //Mouse Facing Input
     }
 }
