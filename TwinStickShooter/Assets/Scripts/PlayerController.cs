@@ -6,18 +6,19 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private float movementSpeed = 10f;
-
+ 
+    [SerializeField]
+    private Transform spine;
+   
     private Vector3 moveDirection;
     private Vector3 facingDirection;
 
     private Actions actions;
-    private Transform spine;
 
     // Use this for initialization
     void Start()
     {
         actions = gameObject.GetComponent<Actions>();
-        //spine = 
     }
 
     // Update is called once per frame
@@ -32,8 +33,8 @@ public class PlayerController : MonoBehaviour
         moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
         transform.position += moveVector;
 
-        var rigSpine = gameObject.Find("RigAss").transform.Find("RigSpine1");
-        rigSpine.transform.LookAt(facingDirection);
+        //spine.LookAt(facingDirection);
+        Debug.Log();
 
         /*if (movementDirection != new Vector3(0, 0, 0))
             actions.Walk();
