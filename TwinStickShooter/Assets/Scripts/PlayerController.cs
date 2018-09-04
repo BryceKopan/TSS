@@ -33,14 +33,17 @@ public class PlayerController : MonoBehaviour
         moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
         transform.position += moveVector;
 
-        //spine.LookAt(facingDirection);
-        Debug.Log();
-
         /*if (movementDirection != new Vector3(0, 0, 0))
             actions.Walk();
         else if (movementDirection == new Vector3(0, 0, 0))
             actions.Idle();
         */
+    }
+
+    private void LateUpdate()
+    {
+        float rotationAngle = Mathf.Atan2(facingDirection.x, facingDirection.z) * Mathf.Rad2Deg;
+        spine.transform.eulerAngles = new Vector3(spine.transform.eulerAngles.x, spine.transform.eulerAngles.y + rotationAngle, spine.transform.eulerAngles.z);
     }
 
     void handleInput()
