@@ -14,11 +14,19 @@ public class PlayerController : MonoBehaviour
     private Vector3 facingDirection;
 
     private Actions actions;
+    private AnimatorController controller;
+    private Animator animator;
+
+    private bool aiming = false;
 
     // Use this for initialization
     void Start()
     {
         actions = gameObject.GetComponent<Actions>();
+        controller = gameObject.GetComponent<AnimatorController>();
+        animator = GetComponent<Animator>();
+
+        controller.SetArsenal(controller.arsenal[1].name);
     }
 
     // Update is called once per frame
@@ -28,26 +36,30 @@ public class PlayerController : MonoBehaviour
         setMovementAngle();
         setFacingAngle();
 
-        //transform.rotation = Quaternion.Euler(lookDirection);
+        transform.LookAt(transform.position + moveDirection);
+
         Vector3 moveVector;
         moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
         transform.position += moveVector;
 
-        /*if (movementDirection != new Vector3(0, 0, 0))
-            actions.Walk();
-        else if (movementDirection == new Vector3(0, 0, 0))
-            actions.Idle();
-        */
+        if (moveDirection != new Vector3(0, 0, 0))
+            animator.SetFloat("Speed", 0.5f);  
+        else if (moveDirection == new Vector3(0, 0, 0))
+            animator.SetFloat("Speed", 0f);
     }
 
     private void LateUpdate()
     {
         float rotationAngle = Mathf.Atan2(facingDirection.x, facingDirection.z) * Mathf.Rad2Deg;
-        spine.transform.eulerAngles = new Vector3(spine.transform.eulerAngles.x, spine.transform.eulerAngles.y + rotationAngle, spine.transform.eulerAngles.z);
+        spine.transform.eulerAngles = new Vector3(spine.transform.eulerAngles.x, spine.transform.eulerAngles.y + rotationAngle - transform.eulerAngles.y, spine.transform.eulerAngles.z);
     }
 
     void handleInput()
     {
+        if (Input.GetMouseButtonDown(1))
+            animator.SetBool("Aiming", true);
+        else if (Input.GetMouseButtonUp(1))
+            animator.SetBool("Aiming", false);
     }
 
     void setMovementAngle()
