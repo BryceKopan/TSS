@@ -5,16 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-        private float movementSpeed = 10f;
+    private float movementSpeed = 10f;
 
     private Vector3 moveDirection;
     private Vector3 facingDirection;
+
     private Actions actions;
+    private Transform spine;
 
     // Use this for initialization
     void Start()
     {
         actions = gameObject.GetComponent<Actions>();
+        //spine = 
     }
 
     // Update is called once per frame
@@ -28,6 +31,9 @@ public class PlayerController : MonoBehaviour
         Vector3 moveVector;
         moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
         transform.position += moveVector;
+
+        var rigSpine = gameObject.Find("RigAss").transform.Find("RigSpine1");
+        rigSpine.transform.LookAt(facingDirection);
 
         /*if (movementDirection != new Vector3(0, 0, 0))
             actions.Walk();
@@ -43,43 +49,48 @@ public class PlayerController : MonoBehaviour
     void setMovementAngle()
     {
         //WASD Movement Input
-        if(Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
             moveDirection += Vector3.forward;
-        if(Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W))
             moveDirection -= Vector3.forward;
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
             moveDirection += Vector3.left;
-        if(Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A))
             moveDirection -= Vector3.left;
-        if(Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
             moveDirection += Vector3.back;
-        if(Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S))
             moveDirection -= Vector3.back;
-        if(Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
             moveDirection += Vector3.right;
-        if(Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D))
             moveDirection -= Vector3.right;
     }
 
     void setFacingAngle()
     {
+        /*
         //Arrow Keys Facing Input
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
             facingDirection += Vector3.forward;
-        else if(Input.GetKeyUp(KeyCode.UpArrow))
+        if (Input.GetKeyUp(KeyCode.UpArrow))
             facingDirection -= Vector3.forward;
-        else if(Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
             facingDirection += Vector3.left;
-        else if(Input.GetKeyUp(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
             facingDirection -= Vector3.left;
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
             facingDirection += Vector3.back;
-        else if(Input.GetKeyUp(KeyCode.DownArrow))
+        if (Input.GetKeyUp(KeyCode.DownArrow))
             facingDirection -= Vector3.back;
-        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
             facingDirection += Vector3.right;
-        else if(Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.RightArrow))
             facingDirection -= Vector3.right;
+        */
+
         //Mouse Facing Input
+        facingDirection.x = Input.mousePosition.x - Screen.width / 2;
+        facingDirection.z = Input.mousePosition.y - Screen.height / 2;
     }
 }

@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 36614559}
-  height: 5
+  height: 10
   distance: 5
   angle: 0
   smoothSpeed: 0.5
