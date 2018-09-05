@@ -5,15 +5,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float movementSpeed = 10f;
- 
+        private float movementSpeed = 10f;
+
     [SerializeField]
-    private Transform spine;
+        private Transform spine;
+
+    [SerializeField]
+        private GameObject bulletPrefab;
 
     private Actions actions;
     private AnimatorController controller;
     private Animator animator;
-    private Transform rifle;
+    private Transform bulletSpawn;
 
     private Vector3 moveDirection;
     private Vector3 facingDirection;
@@ -26,9 +29,10 @@ public class PlayerController : MonoBehaviour
         actions = gameObject.GetComponent<Actions>();
         controller = gameObject.GetComponent<AnimatorController>();
         animator = GetComponent<Animator>();
-        rifle = gameObject.transform.Find("SciFiRifle(Clone)");
 
         controller.SetArsenal(controller.arsenal[1].name);
+
+        bulletSpawn = GameObject.Find("BulletSpawn").transform;
     }
 
     // Update is called once per frame
@@ -85,6 +89,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            Fire();
             actions.Attack();
         }
     }
@@ -115,25 +120,39 @@ public class PlayerController : MonoBehaviour
         /*
         //Arrow Keys Facing Input
         if (Input.GetKeyDown(KeyCode.UpArrow))
-            facingDirection += Vector3.forward;
+        facingDirection += Vector3.forward;
         if (Input.GetKeyUp(KeyCode.UpArrow))
-            facingDirection -= Vector3.forward;
+        facingDirection -= Vector3.forward;
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            facingDirection += Vector3.left;
+        facingDirection += Vector3.left;
         if (Input.GetKeyUp(KeyCode.LeftArrow))
-            facingDirection -= Vector3.left;
+        facingDirection -= Vector3.left;
         if (Input.GetKeyDown(KeyCode.DownArrow))
-            facingDirection += Vector3.back;
+        facingDirection += Vector3.back;
         if (Input.GetKeyUp(KeyCode.DownArrow))
-            facingDirection -= Vector3.back;
+        facingDirection -= Vector3.back;
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            facingDirection += Vector3.right;
+        facingDirection += Vector3.right;
         if (Input.GetKeyUp(KeyCode.RightArrow))
-            facingDirection -= Vector3.right;
+        facingDirection -= Vector3.right;
         */
 
         //Mouse Facing Input
         facingDirection.x = Input.mousePosition.x - Screen.width / 2;
         facingDirection.z = Input.mousePosition.y - Screen.height / 2;
+    }
+
+    void Fire()
+    {
+        //Create the Bullet from the Bullet Prefab
+        var bullet = (GameObject)Instantiate (
+                bulletPrefab,
+                bulletSpawn.position,
+                bulletSpawn.rotation);
+
+        //Add velocity to the bullet
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        // Destroy the bullet after 2 seconds
+        Destroy(bullet, 2.0f);
     }
 }
