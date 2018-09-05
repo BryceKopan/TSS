@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   spine: {fileID: 1761125154}
+  bulletPrefab: {fileID: 1640920323904900, guid: 7f836962f62b3449389e40689ce65610,
+    type: 2}
 --- !u!4 &36614559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400096, guid: 398da42bc4f6f6e44852a9f96c6c4e41,

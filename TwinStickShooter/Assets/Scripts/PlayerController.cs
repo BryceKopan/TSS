@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Transform bulletSpawn;
 
+    private Vector3 moveVector;
     private Vector3 moveDirection;
     private Vector3 facingDirection;
 
@@ -44,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
         transform.LookAt(transform.position + moveDirection);
 
-        Vector3 moveVector;
         moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
         transform.position += moveVector;
 
@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
         //Mouse Facing Input
         facingDirection.x = Input.mousePosition.x - Screen.width / 2;
         facingDirection.z = Input.mousePosition.y - Screen.height / 2;
+        facingDirection.Normalize();
     }
 
     void Fire()
@@ -151,7 +152,9 @@ public class PlayerController : MonoBehaviour
                 bulletSpawn.rotation);
 
         //Add velocity to the bullet
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        bullet.GetComponent<Rigidbody>().velocity = facingDirection * 6;
+        //bullet.GetComponent<Rigidbody>().velocity += ;
+
         // Destroy the bullet after 2 seconds
         Destroy(bullet, 2.0f);
     }
