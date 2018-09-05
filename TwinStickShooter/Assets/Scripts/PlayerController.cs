@@ -9,13 +9,14 @@ public class PlayerController : MonoBehaviour
  
     [SerializeField]
     private Transform spine;
-   
-    private Vector3 moveDirection;
-    private Vector3 facingDirection;
 
     private Actions actions;
     private AnimatorController controller;
     private Animator animator;
+    private Transform rifle;
+
+    private Vector3 moveDirection;
+    private Vector3 facingDirection;
 
     private bool aiming = false;
 
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
         actions = gameObject.GetComponent<Actions>();
         controller = gameObject.GetComponent<AnimatorController>();
         animator = GetComponent<Animator>();
+        rifle = gameObject.transform.Find("SciFiRifle(Clone)");
 
         controller.SetArsenal(controller.arsenal[1].name);
     }
@@ -43,9 +45,15 @@ public class PlayerController : MonoBehaviour
         transform.position += moveVector;
 
         if (moveDirection != new Vector3(0, 0, 0))
-            animator.SetFloat("Speed", 0.5f);  
+        {
+            animator.SetFloat("Speed", 0.5f);
+            aiming = false;
+            animator.SetBool("Aiming", aiming);
+        }
         else if (moveDirection == new Vector3(0, 0, 0))
+        {
             animator.SetFloat("Speed", 0f);
+        }
     }
 
     private void LateUpdate()
@@ -54,12 +62,31 @@ public class PlayerController : MonoBehaviour
         spine.transform.eulerAngles = new Vector3(spine.transform.eulerAngles.x, spine.transform.eulerAngles.y + rotationAngle - transform.eulerAngles.y, spine.transform.eulerAngles.z);
     }
 
+    void drawLaser()
+    {
+        if(aiming)
+        {
+
+        }
+    }
+
     void handleInput()
     {
         if (Input.GetMouseButtonDown(1))
-            animator.SetBool("Aiming", true);
+        {
+            aiming = true;
+            animator.SetBool("Aiming", aiming);
+        }        
         else if (Input.GetMouseButtonUp(1))
-            animator.SetBool("Aiming", false);
+        {
+            aiming = false;
+            animator.SetBool("Aiming", aiming);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            actions.Attack();
+        }
     }
 
     void setMovementAngle()
