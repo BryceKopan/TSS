@@ -10,7 +10,8 @@ public abstract class Entity : MonoBehaviour
 
     void Start() 
     {
-
+        OnStart();
+        SetStats();
     }
 
     void Update()
@@ -19,14 +20,18 @@ public abstract class Entity : MonoBehaviour
 
     void LateUpdate()
     {
+        if (dead)
+        {
+            Death();
+        }
     }
 
     void Attack(Entity entity)
     {
-        
+        entity.TakeDamage(damage);
     }
 
-    void takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if(health <= 0)
@@ -35,5 +40,7 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
-    public abstract void death();
+    protected abstract void SetStats();
+    protected abstract void Death();
+    protected abstract void OnStart();
 }

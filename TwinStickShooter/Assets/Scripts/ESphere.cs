@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ESphere : MonoBehaviour {
+[RequireComponent(typeof(SphereCollider))]
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class ESphere : ShapeEnemy {
+    private SphereCollider sphere;
+
+    protected override void OnStart()
+    {
+        sphere = gameObject.GetComponent<SphereCollider>();
+    }
+
+    protected override float GetVolume()
+    {
+        return (4 / 3) * Mathf.PI * Mathf.Pow(sphere.radius, 3);
+    }
 }
