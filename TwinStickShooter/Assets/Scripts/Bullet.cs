@@ -23,10 +23,8 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Entity entity = other.gameObject.GetComponent<Entity>();
-        Debug.Log(entity);
         if (entity)
         {
-            Debug.Log("Hit");
             entity.TakeDamage(30);
             Destroy(gameObject);
         }
