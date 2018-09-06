@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33686672420321206}
   - component: {fileID: 23454360111813116}
   - component: {fileID: 135643119417264756}
-  - component: {fileID: 54696229464814414}
   - component: {fileID: 114998411179052408}
   m_Layer: 0
   m_Name: Bullet
@@ -38,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1640920323904900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.64, y: 0.995, z: 1.57}
+  m_LocalPosition: {x: 2.1644704, y: 0.525, z: 2.3566234}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,21 +85,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1640920323904900}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54696229464814414
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1640920323904900}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &114998411179052408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,6 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b680b418e911e49b332f0642144038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveVector: {x: 0, y: 0, z: 0}
+  bulletMoveSpeed: 10
 --- !u!135 &135643119417264756
 SphereCollider:
   m_ObjectHideFlags: 1

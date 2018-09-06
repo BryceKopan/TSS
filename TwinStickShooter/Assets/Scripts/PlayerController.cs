@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-        private float movementSpeed = 10f;
+        private float movementSpeed = 6f;
 
     [SerializeField]
         private Transform spine;
@@ -151,9 +151,11 @@ public class PlayerController : MonoBehaviour
                 bulletSpawn.position,
                 bulletSpawn.rotation);
 
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+
         //Add velocity to the bullet
-        bullet.GetComponent<Rigidbody>().velocity = facingDirection * 6;
-        //bullet.GetComponent<Rigidbody>().velocity += ;
+        bulletScript.moveVector = facingDirection * bulletScript.bulletMoveSpeed * Time.deltaTime;
+        bulletScript.moveVector += moveVector;
 
         // Destroy the bullet after 2 seconds
         Destroy(bullet, 2.0f);
