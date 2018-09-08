@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
         private GameObject bulletPrefab;
 
+    //[SerializeField]
+    //    private Camera camera;
+
     private Actions actions;
     private AnimatorController controller;
     private Animator animator;
@@ -138,8 +141,25 @@ public class PlayerController : MonoBehaviour
         */
 
         //Mouse Facing Input
-        facingDirection.x = Input.mousePosition.x - Screen.width / 2;
-        facingDirection.z = Input.mousePosition.y - Screen.height / 2;
+        
+        /*RaycastHit hit; 
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition); 
+
+        if ( Physics.Raycast (ray, out hit)) 
+        {
+            facingDirection.x = 
+                hit.point.x - gameObject.transform.position.x;
+            facingDirection.z = 
+                hit.point.z - gameObject.transform.position.z;    
+        }
+        else
+        {*/
+            facingDirection.x = 
+                Input.mousePosition.x - Screen.width / 2;
+            facingDirection.z = 
+                Input.mousePosition.y - Screen.height / 2;
+        //}
+
         facingDirection.Normalize();
     }
 

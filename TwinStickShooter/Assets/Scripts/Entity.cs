@@ -6,6 +6,7 @@ public abstract class Entity : MonoBehaviour
 {
     protected float health;
     protected float damage;
+    protected Vector3 moveDirection;
     private bool dead = false;
 
     void Start() 
@@ -16,6 +17,8 @@ public abstract class Entity : MonoBehaviour
 
     void Update()
     {
+        OnUpdate();
+        Move(moveDirection);
     }
 
     void LateUpdate()
@@ -42,5 +45,7 @@ public abstract class Entity : MonoBehaviour
 
     protected abstract void SetStats();
     protected abstract void Death();
+    protected abstract void Move(Vector3 moveDirection);
     protected abstract void OnStart();
+    protected abstract void OnUpdate();
 }
