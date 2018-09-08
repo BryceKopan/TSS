@@ -4,11 +4,18 @@ using UnityEngine;
 
 public abstract class ShapeEnemy : Entity {
     private float volumeFactor = 100f;
-    private AI ai;
+    protected float attackCooldown;
+    protected AI ai;
+    private bool attackOnCooldown = false;
 
     protected override void OnUpdate()
     {
         moveDirection = ai.GetMoveDirection();
+        if(ai.GetAttack() && !attackOnCooldown)
+        {
+            StartCoroutine(AttackCooldown());
+            StartCoroutine(Attack());
+        }
     }
 
     protected override void Death()
@@ -20,10 +27,15 @@ public abstract class ShapeEnemy : Entity {
     {
         health = GetVolume() * volumeFactor;
         damage = GetVolume() * volumeFactor;
-
-        GameObject go = GameObject.FindWithTag("Player");
-        ai = new AI(gameObject.transform, go.transform);
     }
 
     protected abstract float GetVolume();
+    protected abstract IEnumerator Attack();
+
+    private IEnumerator AttackCooldown()
+    {
+        attackOnCooldown = true;
+        yield return new WaitForSeconds(attackCooldown);
+        attackOnCooldown = false;
+    }
 }
