@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
         private float movementSpeed = 6f;
 
     [SerializeField]
+        private float DashDistance = 6f;
+
+    [SerializeField]
         private Transform spine;
 
     [SerializeField]
@@ -93,8 +96,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Fire();
-            actions.Attack();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Dash();
+        }
+    }
+
+    void Dash()
+    {
+        transform.position += moveDirection.normalized * DashDistance;
     }
 
     void setMovementAngle()
@@ -165,6 +176,8 @@ public class PlayerController : MonoBehaviour
 
     void Fire()
     {
+        actions.Attack();
+
         //Create the Bullet from the Bullet Prefab
         var bullet = (GameObject)Instantiate (
                 bulletPrefab,

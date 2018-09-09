@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider))]
 
 public class ESphere : ShapeEnemy {
+    
+    [SerializeField]
+        private GameObject explosionPrefab;
+
     private float moveSpeed = 20f;
     private float attackDelay = 1;
 
@@ -39,5 +43,10 @@ public class ESphere : ShapeEnemy {
         rend.material.color = Color.red;
         yield return new WaitForSeconds(attackDelay);
         rend.material.color = originalColor;
+
+        var explosion = (GameObject)Instantiate (
+            explosionPrefab,
+            gameObject.transform.position,
+            gameObject.transform.rotation);
     }
 }
