@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
         private GameObject bulletPrefab;
 
+    [SerializeField]
+        private GameObject DashEffect;
+
     //[SerializeField]
     //    private Camera camera;
 
@@ -72,14 +75,6 @@ public class PlayerController : MonoBehaviour
         spine.transform.eulerAngles = new Vector3(spine.transform.eulerAngles.x, spine.transform.eulerAngles.y + rotationAngle - transform.eulerAngles.y, spine.transform.eulerAngles.z);
     }
 
-    void drawLaser()
-    {
-        if(aiming)
-        {
-
-        }
-    }
-
     void handleInput()
     {
         if (Input.GetMouseButtonDown(1))
@@ -105,7 +100,19 @@ public class PlayerController : MonoBehaviour
 
     void Dash()
     {
+        Vector3 oldPosition = transform.position;
         transform.position += moveDirection.normalized * DashDistance;
+
+        var dashEffect = (GameObject)Instantiate(
+            DashEffect,
+            gameObject.transform.position,
+            gameObject.transform.rotation);
+
+        dashEffect.transform.LookAt(oldPosition);
+        Debug.DrawLine(oldPosition, transform.position, Color.red, 100);
+
+        ParticleSystem ps = dashEffect.GetComponent<ParticleSystem>();
+        Destroy(dashEffect, ps.main.duration);
     }
 
     void setMovementAngle()
@@ -131,45 +138,11 @@ public class PlayerController : MonoBehaviour
 
     void setFacingAngle()
     {
-        /*
-        //Arrow Keys Facing Input
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        facingDirection += Vector3.forward;
-        if (Input.GetKeyUp(KeyCode.UpArrow))
-        facingDirection -= Vector3.forward;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        facingDirection += Vector3.left;
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        facingDirection -= Vector3.left;
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        facingDirection += Vector3.back;
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        facingDirection -= Vector3.back;
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        facingDirection += Vector3.right;
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        facingDirection -= Vector3.right;
-        */
 
-        //Mouse Facing Input
-        
-        /*RaycastHit hit; 
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition); 
-
-        if ( Physics.Raycast (ray, out hit)) 
-        {
-            facingDirection.x = 
-                hit.point.x - gameObject.transform.position.x;
-            facingDirection.z = 
-                hit.point.z - gameObject.transform.position.z;    
-        }
-        else
-        {*/
-            facingDirection.x = 
-                Input.mousePosition.x - Screen.width / 2;
-            facingDirection.z = 
-                Input.mousePosition.y - Screen.height / 2;
-        //}
+        facingDirection.x = 
+            Input.mousePosition.x - Screen.width / 2;
+        facingDirection.z = 
+            Input.mousePosition.y - Screen.height / 2;
 
         facingDirection.Normalize();
     }

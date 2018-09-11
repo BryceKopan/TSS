@@ -732,9 +732,10 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 11400000}
   - component: {fileID: 11400002}
-  - component: {fileID: 54729410401198730}
   - component: {fileID: 136552495176758476}
   - component: {fileID: 114439819238059224}
+  - component: {fileID: 54074255853712664}
+  - component: {fileID: 136943176362379808}
   m_Layer: 0
   m_Name: Sci-Fi_Soldier
   m_TagString: Player
@@ -1583,7 +1584,7 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100096}
   m_IsPrefabAsset: 1
---- !u!54 &54729410401198730
+--- !u!54 &54074255853712664
 Rigidbody:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1610,10 +1611,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 6
+  DashDistance: 6
   spine: {fileID: 400084}
   bulletPrefab: {fileID: 1640920323904900, guid: 7f836962f62b3449389e40689ce65610,
     type: 2}
 --- !u!136 &136552495176758476
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100096}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.23
+  m_Height: 0.94
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.46, z: 0}
+--- !u!136 &136943176362379808
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

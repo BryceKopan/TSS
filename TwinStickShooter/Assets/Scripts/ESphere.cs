@@ -48,5 +48,8 @@ public class ESphere : ShapeEnemy {
             explosionPrefab,
             gameObject.transform.position,
             gameObject.transform.rotation);
+
+        ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
+        Destroy(explosion, ps.main.duration);
     }
 }
