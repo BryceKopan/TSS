@@ -23,13 +23,6 @@ public abstract class ShapeEnemy : Entity {
         Destroy(gameObject);
     }
 
-    protected override void SetStats()
-    {
-        health = GetVolume() * volumeFactor;
-        damage = GetVolume() * volumeFactor;
-    }
-
-    protected abstract float GetVolume();
     protected abstract IEnumerator Attack();
 
     private IEnumerator AttackCooldown()

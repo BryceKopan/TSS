@@ -4,8 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 
-public class ESphere : ShapeEnemy {
-    
+public class ESphere : ShapeEnemy 
+{
     [SerializeField]
         private GameObject explosionPrefab;
 
@@ -14,13 +14,11 @@ public class ESphere : ShapeEnemy {
     
     private float attackDelay = 1;
 
-    private SphereCollider sphere;
     private Rigidbody rb;
     private Renderer rend;
 
     protected override void OnStart()
     {
-        sphere = gameObject.GetComponent<SphereCollider>();
         rb = gameObject.GetComponent<Rigidbody>();
         rend = gameObject.GetComponent<Renderer>();
 
@@ -29,9 +27,10 @@ public class ESphere : ShapeEnemy {
         attackCooldown = 2;
     }
 
-    protected override float GetVolume()
+    protected override void SetStats()
     {
-        return (4 / 3) * Mathf.PI * Mathf.Pow(sphere.radius, 3);
+        health = 50;
+        damage = 30;
     }
 
     protected override void Move(Vector3 moveDirection)
