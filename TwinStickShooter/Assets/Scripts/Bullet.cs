@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField]
+        private float BulletDamage = 1f;
+
     public Vector3 moveVector;
-    public float bulletMoveSpeed = 10f;
+    public float bulletMoveSpeed = 20f;
 
     // Use this for initialization
     void Start()
@@ -25,7 +28,7 @@ public class Bullet : MonoBehaviour
         Entity entity = other.gameObject.GetComponent<Entity>();
         if (entity)
         {
-            entity.TakeDamage(30);
+            entity.TakeDamage(BulletDamage);
             Destroy(gameObject);
         }
     }

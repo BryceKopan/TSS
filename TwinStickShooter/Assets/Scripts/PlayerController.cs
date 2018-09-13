@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 facingDirection;
 
     private bool aiming = false;
+    private bool firing = false;
 
     // Use this for initialization
     void Start()
@@ -52,10 +53,13 @@ public class PlayerController : MonoBehaviour
         setMovementAngle();
         setFacingAngle();
 
-        transform.LookAt(transform.position + moveDirection);
-
         moveVector = moveDirection.normalized * movementSpeed * Time.deltaTime;
-        transform.position += moveVector;
+
+        if(firing)
+        {
+            moveVector = moveVector * .5f;
+            Fire();
+        }
 
         if (moveDirection != new Vector3(0, 0, 0))
         {
@@ -67,6 +71,9 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetFloat("Speed", 0f);
         }
+
+        transform.LookAt(transform.position + moveDirection);
+        transform.position += moveVector;
     }
 
     private void LateUpdate()
@@ -82,7 +89,7 @@ public class PlayerController : MonoBehaviour
             aiming = true;
             animator.SetBool("Aiming", aiming);
         }        
-        else if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1))
         {
             aiming = false;
             animator.SetBool("Aiming", aiming);
@@ -90,8 +97,13 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Fire();
+            firing = true;
         }
+        if(Input.GetMouseButtonUp(0))
+        {
+            firing = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Dash();
