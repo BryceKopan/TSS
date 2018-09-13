@@ -9,7 +9,9 @@ public class ESphere : ShapeEnemy {
     [SerializeField]
         private GameObject explosionPrefab;
 
-    private float moveSpeed = 20f;
+    [SerializeField]
+        private float moveSpeed = 20f;
+    
     private float attackDelay = 1;
 
     private SphereCollider sphere;
