@@ -7,12 +7,13 @@ using UnityEngine;
 public class ESphere : ShapeEnemy 
 {
     [SerializeField]
-        private GameObject explosionPrefab;
-
+        private GameObject ExplosionPrefab;
     [SerializeField]
-        private float moveSpeed = 20f;
-    
-    private float attackDelay = 1;
+        private float MoveSpeed = 10f;
+    [SerializeField]
+        private float MaxMoveSpeed = 20f;
+    [SerializeField]
+        private float AttackDelay = 1;
 
     private Rigidbody rb;
     private Renderer rend;
@@ -35,22 +36,28 @@ public class ESphere : ShapeEnemy
 
     protected override void Move(Vector3 moveDirection)
     {
-        rb.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        if(rb.velocity.magnitude < MaxMoveSpeed && !attacking)
+            rb.AddForce(moveDirection * MoveSpeed * Time.deltaTime);
     }
 
     protected override IEnumerator Attack()
     {
+        attacking = true;
+
         Color originalColor = rend.material.color;
         rend.material.color = Color.red;
-        yield return new WaitForSeconds(attackDelay);
+        
+        yield return new WaitForSeconds(AttackDelay);
+        
         rend.material.color = originalColor;
 
-        var explosion = (GameObject)Instantiate (
-            explosionPrefab,
+        GameObject explosion = Instantiate (
+            ExplosionPrefab,
             gameObject.transform.position,
             gameObject.transform.rotation);
 
         ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
         Destroy(explosion, ps.main.duration);
+        attacking = false;
     }
 }

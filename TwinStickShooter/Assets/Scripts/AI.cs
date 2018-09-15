@@ -27,7 +27,10 @@ public class AI
 
     public Vector3 GetMoveDirection()
     {
-        return playerLocation.position - entityLocation.position;
+        Vector3 moveVector;
+        moveVector = playerLocation.position - entityLocation.position;
+        moveVector.y = 0;
+        return moveVector;
     }
 }
 

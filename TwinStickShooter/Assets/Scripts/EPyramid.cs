@@ -5,13 +5,23 @@ using UnityEngine;
 public class EPyramid : ShapeEnemy
 {
     [SerializeField]
-        private float MoveSpeed = 20f;
+        private GameObject LaserPrefab;
+    [SerializeField]
+        private float MoveSpeed = 10f;
+    [SerializeField]
+        private float MaxMoveSpeed = 20f;
+    [SerializeField]
+        private float AttackDelay = 1;
 
     private Rigidbody rb;
+    private Renderer rend;
+    private Transform laserSpawn;
 
     protected override void OnStart()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        rend = GetComponent<Renderer>();
+        laserSpawn = transform.GetChild(0);
 
         GameObject go = GameObject.FindWithTag("Player");
         ai = new AI(gameObject.transform, go.transform, 20);
@@ -26,11 +36,28 @@ public class EPyramid : ShapeEnemy
 
     protected override void Move(Vector3 moveDirection)
     {
-        rb.AddForce(moveDirection * MoveSpeed * Time.deltaTime);
+        if(rb.velocity.magnitude < MaxMoveSpeed && !attacking)
+            rb.AddForce(moveDirection * MoveSpeed * Time.deltaTime);
+
+        transform.LookAt(transform.position + moveDirection);
     }
 
     protected override IEnumerator Attack()
     {
-        yield return null;
+        attacking = true;
+        Color originalColor = rend.material.color;
+        rend.material.color = Color.red;
+
+        yield return new WaitForSeconds(AttackDelay);
+
+        rend.material.color = originalColor;
+
+        GameObject laser = Instantiate(
+                LaserPrefab,
+                laserSpawn.position,
+                laserSpawn.rotation);
+
+        Destroy(laser, .25f);
+        attacking = false;
     }
 }

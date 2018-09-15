@@ -7,6 +7,7 @@ public abstract class ShapeEnemy : Entity {
     protected float attackCooldown;
     protected AI ai;
     private bool attackOnCooldown = false;
+    protected bool attacking = false;
 
     protected override void OnUpdate()
     {
