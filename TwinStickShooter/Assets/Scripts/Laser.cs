@@ -13,21 +13,29 @@ public class Laser : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        vlb = GameObject.Find("VolumetricLinePrefab").GetComponent<VolumetricLines.VolumetricLineBehavior>();
+        vlb = transform.GetChild(0).GetComponent<VolumetricLines.VolumetricLineBehavior>();
+
+        SetVLBPoints();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        SetVLBPoints();
+	}
+
+    void SetVLBPoints()
+    {
         Ray ray = new Ray(transform.position, transform.forward);
         if(Physics.Raycast(ray, out hit, LaserMaxRange))
         {
-            vlb.EndPos = hit.point - ray.origin;
+            vlb.EndPos = new Vector3(0, 0, hit.distance);
+            Debug.DrawLine(ray.origin, hit.point, Color.red, 1);
         }
         else
         {
             vlb.EndPos = ray.direction * LaserMaxRange;
+            Debug.DrawLine(ray.origin, ray.origin + transform.forward * LaserMaxRange, Color.red, 1);
         }
-        Debug.DrawLine(ray.origin, vlb.EndPos, Color.red, 1);
-	}
+    }
 }

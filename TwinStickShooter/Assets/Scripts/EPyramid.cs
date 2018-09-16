@@ -57,7 +57,7 @@ public class EPyramid : ShapeEnemy
                 laserSpawn.position,
                 laserSpawn.rotation);
 
-        Destroy(laser, .25f);
+        Destroy(laser, .5f);
         attacking = false;
     }
 }
