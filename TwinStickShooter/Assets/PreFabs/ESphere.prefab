@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361129065372786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.3965511, y: 1.07, z: 0.80530405}
+  m_LocalPosition: {x: -4.4167795, y: 1, z: -2.4684215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,9 +112,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce41368c50a349c1976ae800ffe6f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 1853476627728456, guid: d09aad6804fdb4cf491eb4694994d773,
+  ExplosionPrefab: {fileID: 1853476627728456, guid: d09aad6804fdb4cf491eb4694994d773,
     type: 2}
-  moveSpeed: 60
+  MoveSpeed: 10
+  MaxMoveSpeed: 20
+  AttackDelay: 1
 --- !u!135 &135003574451951006
 SphereCollider:
   m_ObjectHideFlags: 1

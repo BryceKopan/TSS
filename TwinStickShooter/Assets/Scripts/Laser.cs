@@ -8,34 +8,34 @@ public class Laser : MonoBehaviour
         private const float LaserMaxRange = 50f;
 
     RaycastHit hit;
-    VolumetricLines.VolumetricLineBehavior vlb;
+    LineRenderer lr;
 
 	// Use this for initialization
 	void Start ()
     {
-        vlb = transform.GetChild(0).GetComponent<VolumetricLines.VolumetricLineBehavior>();
+        lr = GetComponent<LineRenderer>();
 
-        SetVLBPoints();
+        SetLRPoints();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        SetVLBPoints();
+        SetLRPoints();
 	}
 
-    void SetVLBPoints()
+    void SetLRPoints()
     {
         Ray ray = new Ray(transform.position, transform.forward);
-        if(Physics.Raycast(ray, out hit, LaserMaxRange))
+        lr.SetPosition(0, ray.origin);
+
+        if (Physics.Raycast(ray, out hit, LaserMaxRange))
         {
-            vlb.EndPos = new Vector3(0, 0, hit.distance);
-            Debug.DrawLine(ray.origin, hit.point, Color.red, 1);
+            lr.SetPosition(1, hit.point);
         }
         else
         {
-            vlb.EndPos = ray.direction * LaserMaxRange;
-            Debug.DrawLine(ray.origin, ray.origin + transform.forward * LaserMaxRange, Color.red, 1);
+            lr.SetPosition(1, ray.origin + transform.forward * LaserMaxRange);
         }
     }
 }

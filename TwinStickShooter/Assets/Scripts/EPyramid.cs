@@ -39,12 +39,19 @@ public class EPyramid : ShapeEnemy
         if(rb.velocity.magnitude < MaxMoveSpeed && !attacking)
             rb.AddForce(moveDirection * MoveSpeed * Time.deltaTime);
 
-        transform.LookAt(transform.position + moveDirection);
+        int speed = 5;
+
+        var targetRotation = Quaternion.LookRotation(transform.position + moveDirection);
+
+        if (!attacking)
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
     }
 
     protected override IEnumerator Attack()
     {
         attacking = true;
+        rb.velocity = new Vector3(0, 0, 0);
+
         Color originalColor = rend.material.color;
         rend.material.color = Color.red;
 
@@ -57,7 +64,7 @@ public class EPyramid : ShapeEnemy
                 laserSpawn.position,
                 laserSpawn.rotation);
 
-        Destroy(laser, .5f);
+        Destroy(laser, .25f);
         attacking = false;
     }
 }
