@@ -21,6 +21,7 @@ public class Explosion : MonoBehaviour {
         GameObject go = other.gameObject;
         Rigidbody rb = go.GetComponent<Rigidbody>();
         Entity ent = go.GetComponent<Entity>();
+        PlayerController pc = go.GetComponent<PlayerController>();
         
         if(rb)
         {
@@ -28,6 +29,10 @@ public class Explosion : MonoBehaviour {
         if(ent)
         {
             ent.TakeDamage(damage);
+        }
+        if(pc)
+        {
+            pc.TakeDamage(damage);
         }
     }
 }

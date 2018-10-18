@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
         private GameObject DashEffect;
+    public float Health = 200;
+    public GameObject endText;
 
     //[SerializeField]
     //    private Camera camera;
@@ -49,6 +51,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(Health);
+
         handleInput();
         setMovementAngle();
         setFacingAngle();
@@ -177,5 +181,15 @@ public class PlayerController : MonoBehaviour
 
         // Destroy the bullet after 2 seconds
         Destroy(bullet, 2.0f);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+        if(Health < 0)
+        {
+            endText.SetActive(true);            
+            Destroy(gameObject);
+        }
     }
 }
